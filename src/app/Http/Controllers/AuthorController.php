@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Author;
+// フォームリクエストの読み込み
+use App\Http\Requests\AuthorRequest;
 
 class AuthorController extends Controller
 {
@@ -21,7 +23,7 @@ class AuthorController extends Controller
     }
 
     // 追加機能
-    public function create(Request $request)
+    public function create(AuthorRequest $request)
     {
         $form = $request->all();
         Author::create($form);
@@ -32,28 +34,6 @@ class AuthorController extends Controller
     public function edit(Request $request){
         $author = Author::find($request->id);
         return view('edit', ['form' => $author]);
-    }
-
-    public function find()
-    {
-        return view('find', ['input' => '']);
-    }
-    public function search(Request $request)
-    {
-      $item = Author::where('name', $request->input)->first();
-        $param = [
-            'input' => $request->input,
-            'item' => $item
-        ];
-        return view('find', $param);
-    }
-
-    public function bind(Author $author)
-    {
-        $data = [
-            'item'=>$author,
-        ];
-        return view('author.binds', $data);
     }
 
     // 更新機能
@@ -71,4 +51,12 @@ class AuthorController extends Controller
         $author = Author::find($request->id);
         return view('delete', ['author' => $author]);
     }
+
+    // 削除機能
+    public function remove(Request $request)
+    {
+        Author::find($request->id)->delete();
+        return redirect('/');
+    }
+
 }
