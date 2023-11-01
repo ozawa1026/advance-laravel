@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\TestCase;
 
 class HelloTest extends TestCase
 {
